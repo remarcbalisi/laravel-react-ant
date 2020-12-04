@@ -33,4 +33,26 @@ class UserTest extends TestCase
             ]
         ]);
     }
+
+    public function test_an_admin_can_view_user()
+    {
+        $this->withoutExceptionHandling();
+        $this->actingAs($this->admin);
+
+        $response = $this->getJson(route('admin.user.show', ['user' => $this->admin->id]));
+        $response->assertJsonStructure([
+            'data' => ['id']
+        ]);
+        $response->assertJsonFragment([
+            'id' => $this->admin->id
+        ]);
+
+        $response = $this->getJson(route('admin.user.show', ['user' => $this->customer->id]));
+        $response->assertJsonStructure([
+            'data' => ['id']
+        ]);
+        $response->assertJsonFragment([
+            'id' => $this->customer->id
+        ]);
+    }
 }
