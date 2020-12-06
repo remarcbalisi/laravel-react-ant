@@ -10,6 +10,12 @@ use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
+    public function index()
+    {
+        auth()->user()->can('viewAny', User::class);
+        return UserResource::collection(User::paginate());
+    }
+
     public function show(User $user)
     {
         $this->authorize('view', $user);

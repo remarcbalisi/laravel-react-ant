@@ -107,4 +107,19 @@ class UserTest extends TestCase
         $update_user = User::find($this->customer->id);
         self::assertTrue($update_user->hasRole($role));
     }
+
+    public function test_an_admin_can_view_all_users()
+    {
+        // $this->withoutExceptionHandling();
+        Passport::actingAs(
+            $this->admin
+        );
+
+        $response = $this->getJson(route('admin.user.index'));
+        $response->assertJsonStructure([
+            'data' => [
+                ['email']
+            ]
+        ]);
+    }
 }
