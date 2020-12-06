@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use Laravel\Passport\Passport;
 
 class UserTest extends TestCase
 {
@@ -24,7 +25,7 @@ class UserTest extends TestCase
     {
         $this->withoutExceptionHandling();
         $payload = [
-            'email' => $this->customer->email,
+            'email' => $this->admin->email,
             'password' => 'password',
         ];
 
@@ -81,7 +82,10 @@ class UserTest extends TestCase
     public function test_an_admin_can_update_user_profile()
     {
         $this->withoutExceptionHandling();
-        $this->actingAs($this->admin);
+        Passport::actingAs(
+            $this->admin
+        );
+        // $this->actingAs($this->admin);
         $updated_name = $this->faker->name;
         $roles = ['admin', 'customer'];
         $role = $roles[random_int(0, 1)];

@@ -6,6 +6,7 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Resources\RequestTokenResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class LoginController extends Controller
 {
@@ -14,7 +15,7 @@ class LoginController extends Controller
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
             // Authentication passed...
-            $token = auth()->user()->createToken('token-name')->accessToken;;
+            $token = auth()->user()->createToken('Access Token ' . date("h:i:sa"))->accessToken;;
             return new RequestTokenResource( (object) ['token' => $token, 'email' => auth()->user()->email]);
         }
         abort(401);
