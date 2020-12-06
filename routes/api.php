@@ -13,7 +13,7 @@ Route::middleware(['auth:api'])->group(function () {
 
 Route::name('admin.')->prefix('admin')->group(function () {
 
-    Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::middleware(['auth:api', 'role:admin'])->group(function () {
         Route::apiResource('user', UserController::class);
     });
 });

@@ -92,8 +92,6 @@ class UserTest extends TestCase
         $payload = [
             'name' => $updated_name,
             'email' => $this->customer->email,
-            'whatsapp' => $this->faker->phoneNumber,
-            'phone_number' => $this->faker->phoneNumber,
             'role' => $role,
         ];
 

@@ -27,8 +27,6 @@ class UserUpdateRequest extends FormRequest
         return [
             'email' => 'required|unique:App\Models\User,email,'.$this->user->id,
             'name' => 'required',
-            'whatsapp' => 'required',
-            'phone_number' => 'required',
             'role' => Rule::requiredIf(auth()->user()->hasRole('admin'))
         ];
     }
