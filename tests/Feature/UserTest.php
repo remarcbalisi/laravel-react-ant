@@ -124,4 +124,13 @@ class UserTest extends TestCase
             ]
         ]);
     }
+
+    public function test_an_admin_can_delete_user()
+    {
+        Passport::actingAs(
+            $this->admin
+        );
+        $this->getJson(route('admin.user.destroy', ['user'=>$this->customer]));
+        self::assertCount(2, User::get());
+    }
 }
