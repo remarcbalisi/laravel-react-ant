@@ -40,7 +40,9 @@ class UserTest extends TestCase
     public function test_an_admin_can_view_user()
     {
         $this->withoutExceptionHandling();
-        $this->actingAs($this->admin);
+        Passport::actingAs(
+            $this->admin
+        );
 
         $response = $this->getJson(route('admin.user.show', ['user' => $this->admin->id]));
         $response->assertJsonStructure([
@@ -62,7 +64,9 @@ class UserTest extends TestCase
     public function test_an_admin_can_add_new_user()
     {
         $this->withoutExceptionHandling();
-        $this->actingAs($this->admin);
+        Passport::actingAs(
+            $this->admin
+        );
         $roles = ['admin', 'customer'];
         $password = $this->faker->password;
         $payload = [
