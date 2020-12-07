@@ -130,7 +130,7 @@ class UserTest extends TestCase
         Passport::actingAs(
             $this->admin
         );
-        $this->getJson(route('admin.user.destroy', ['user'=>$this->customer]));
-        self::assertCount(2, User::get());
+        $this->deleteJson(route('admin.user.destroy', ['user'=>$this->customer]));
+        self::assertCount(1, User::get());
     }
 }
