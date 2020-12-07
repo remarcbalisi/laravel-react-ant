@@ -7,6 +7,7 @@ use App\Http\Requests\UserUpdateRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -31,6 +32,9 @@ class UserController extends Controller
 
     public function update(UserUpdateRequest $request, User $user)
     {
+        $request->merge([
+            'password' => Hash::make($request->password),
+        ]);
         $user = tap($user)->update($request->except('role'));
         if($request->is('api/admin/user/*')){
             $user->syncRoles([Role::where('name', $request->role)->first()]);
